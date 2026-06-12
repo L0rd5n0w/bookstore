@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>FORM</title>
+    </head>
+
+    <body>
+        <header>Fill Form</header>
+        <div>
+            <input type="hidden" value="csrf_token">
+        </div>
+
+        <div>
+            <label>Title:</label>
+            <input type="text" name="title" value="">
+        </div>
+
+        <div>
+            <label>Description:</label>
+            <input type="text" name="description" value="">            
+        </div>
+
+
+        <div>
+            <label>Author:</label>
+            <input type="text" name="author" value="">
+        </div>
+
+        <div>
+            <label>Edition:</label>
+            <input type="radio" name="1st" value="1st">1st
+            <input type="radio" name="2nd" value="2nd">2nd
+            <input type="radio" name="3rd" value="3rd">3rd
+            <input type="radio" name="Unspecified" value="Unspecified">Unspecified
+        </div>
+
+        <div>
+            <input type="submit" value="Create Book">
+        </div>
+
+        <footer>
+            Powered by <a href="https://golang.org">Go</a>
+        </footer>
+    </body>
+</html>
