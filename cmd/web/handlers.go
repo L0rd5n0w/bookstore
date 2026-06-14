@@ -7,10 +7,10 @@ import (
 )
 
 type Books struct {
-	Title		string
-	Description	string
-	Author		string
-	Edition		string
+	Title		string	`form:"title"`
+	Description	string	`form:"description"`
+	Author		string	`form:"author"`
+	Edition		string	`form:"edition"`
 }
 
 func home(w http.ResponseWriter, r *http.Request) {
@@ -45,14 +45,15 @@ func form(w http.ResponseWriter, r *http.Request) {
 	author := r.FormValue("author")
 	edition := r.FormValue("edition")
 
-	b1 := Books{
+	// an instantiation of Books
+	iBook := Books{
 		Title: title,
 		Description: description,
 		Author: author,
 		Edition: edition,
 	}
 
-	err = ts.Execute(w, b1)
+	err = ts.Execute(w, iBook)
 	if err != nil {
 		log.Print(err)
 		http.Error(w, "Internal Server Error", 500)
