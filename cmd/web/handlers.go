@@ -1,10 +1,17 @@
 package main
 
 import (
-	"net/http"
 	"html/template"
 	"log"
+	"net/http"
 )
+
+type Books struct {
+	Title		string
+	Description	string
+	Author		string
+	Edition		string
+}
 
 func home(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/" {
@@ -12,7 +19,7 @@ func home(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	ts, err := template.ParseFiles("./ui/html/home.html")
+	ts, err := template.ParseFiles("./ui/templates/html/home.gohtml")
 	if err != nil {
 		log.Print(err)
 		http.Error(w, "Internal Server Error", 500)
@@ -24,20 +31,31 @@ func home(w http.ResponseWriter, r *http.Request) {
 		log.Print(err)
 		http.Error(w, "Internal Server Error", 500)
 	}
-	//w.Write([]byte("Loading..."))
 }
 
-func form(w http.ResponseWriter, _ *http.Request) {
-	ts, err := template.ParseFiles("./ui/html/form.html")
+func form(w http.ResponseWriter, r *http.Request) {
+	ts, err := template.ParseFiles("./ui/templates/html/form.gohtml")
 	if err != nil {
 		log.Print(err)
 		http.Error(w, "Internal Server Error", 500)
 	}
 
-	err = ts.Execute(w, nil)
+	title := r.FormValue("title")
+	description := r.FormValue("description")
+	author := r.FormValue("author")
+	edition := r.FormValue("edition")
+
+	b1 := Books{
+		Title: title,
+		Description: description,
+		Author: author,
+		Edition: edition,
+	}
+
+	err = ts.Execute(w, b1)
 	if err != nil {
 		log.Print(err)
-		http.Error(w, "Internal Server Errpr", 500)
+		http.Error(w, "Internal Server Error", 500)
 	}
 }
 
