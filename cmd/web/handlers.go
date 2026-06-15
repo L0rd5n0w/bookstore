@@ -50,12 +50,15 @@ func form(w http.ResponseWriter, r *http.Request) {
 	author := r.FormValue("author")
 	edition := r.FormValue("edition")
 
+
 	newbook := Books{
 		Title: title,
 		Description: description,
 		Author: author,
 		Edition: edition,
 	}
+
+	
 
 	// for parsing the form into json and
 	// storing it into a json file
@@ -65,11 +68,11 @@ func form(w http.ResponseWriter, r *http.Request) {
 	}
 	fmt.Print(string(js))
 
-	file, err := os.Open(dbFile)
+
+	file, err := os.OpenFile(dbFile, os.O_APPEND|os.O_WRONLY, os.ModeAppend)
 	if err != nil {
 		log.Print(err)
 	}
-
 	_, err = file.Write(js)
 	if err != nil {
 		log.Print(err)
