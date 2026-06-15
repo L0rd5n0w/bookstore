@@ -31,10 +31,10 @@
 
             <div>
                 <label>Edition:</label>
-                <input type="radio" name="1st" value="1st">1st
-                <input type="radio" name="2nd" value="2nd">2nd
-                <input type="radio" name="3rd" value="3rd">3rd
-                <input type="radio" name="Unspecified" value="Unspecified">Unspecified
+                <input type="radio" name="edition" value="1st" {{if (eq .Edition "1st")}} checked{{end}}>1st
+                <input type="radio" name="edition" value="2nd" {{if (eq .Edition "2nd")}} checked{{end}}>2nd
+                <input type="radio" name="edition" value="3rd" {{if (eq .Edition "3rd")}} checked{{end}}>3rd
+                <input type="radio" name="edition" value="Unspecified" {{if (eq .Edition "Unspecified")}} checked{{end}}>Unspecified
             </div>
 
             <div>

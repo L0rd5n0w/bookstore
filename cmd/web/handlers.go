@@ -1,16 +1,21 @@
 package main
 
 import (
+	"encoding/json"
+	"fmt"
 	"html/template"
 	"log"
 	"net/http"
+	"os"
 )
 
+const dbFile = "db.json"
+
 type Books struct {
-	Title		string	`form:"title"`
-	Description	string	`form:"description"`
-	Author		string	`form:"author"`
-	Edition		string	`form:"edition"`
+	Title		string	`json:"title"`
+	Description	string	`json:"description"`
+	Author		string	`json:"author"`
+	Edition		string	`json:"edition"`
 }
 
 func home(w http.ResponseWriter, r *http.Request) {
@@ -45,15 +50,33 @@ func form(w http.ResponseWriter, r *http.Request) {
 	author := r.FormValue("author")
 	edition := r.FormValue("edition")
 
-	// an instantiation of Books
-	iBook := Books{
+	newbook := Books{
 		Title: title,
 		Description: description,
 		Author: author,
 		Edition: edition,
 	}
 
-	err = ts.Execute(w, iBook)
+	// for parsing the form into json and
+	// storing it into a json file
+	js, err := json.MarshalIndent(newbook, "", " ")
+	if err != nil {
+		log.Printf("problem started right here %+v", err)
+	}
+	fmt.Print(string(js))
+
+	file, err := os.Open(dbFile)
+	if err != nil {
+		log.Print(err)
+	}
+
+	_, err = file.Write(js)
+	if err != nil {
+		log.Print(err)
+	}
+
+
+	err = ts.Execute(w, newbook)
 	if err != nil {
 		log.Print(err)
 		http.Error(w, "Internal Server Error", 500)
