@@ -1,8 +1,8 @@
 package main
 
 import (
-//	"encoding/json"
-	//"fmt"
+	"encoding/json"
+	"fmt"
 	"html/template"
 	"log"
 	"net/http"
@@ -57,11 +57,13 @@ func(app *application) form(w http.ResponseWriter, r *http.Request) {
 	newbook := NewBooks(title, description, author, edition)
 
 	// for parsing the form into json
-	//js, err := json.Marshal(newbook)
-	//if err != nil {
-	//	log.Printf("problem started right here %+v", err)
-//	}
-	//fmt.Print(string(js))
+	js, err := json.Marshal(newbook)
+	if err != nil {
+		log.Printf("problem started right here %+v", err)
+	}
+	if len(newbook.Title) > 0 {
+		fmt.Print(js)
+	}
 
 	err = ts.Execute(w, newbook)
 	if err != nil {
