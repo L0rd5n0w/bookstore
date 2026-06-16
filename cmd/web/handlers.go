@@ -1,21 +1,25 @@
 package main
 
 import (
-	"encoding/json"
-	"fmt"
+//	"encoding/json"
+	//"fmt"
 	"html/template"
 	"log"
 	"net/http"
 //	"os"
+
+	"github.com/L0rd5n0w/bookstore/models"
 )
 
 const dbFile = "db.json"
 
-type Books struct {
-	Title		string	`json:"title"`
-	Description	string	`json:"description"`
-	Author		string	`json:"author"`
-	Edition		string	`json:"edition"`
+func NewBooks(title, description, author, edition string) *models.Books {
+	return &models.Books{
+		Title: title,
+		Description: description,
+		Author: author,
+		Edition: edition,
+	}
 }
 
 func(app *application) home(w http.ResponseWriter, r *http.Request) {
@@ -50,30 +54,20 @@ func(app *application) form(w http.ResponseWriter, r *http.Request) {
 	author := r.FormValue("author")
 	edition := r.FormValue("edition")
 
+	newbook := NewBooks(title, description, author, edition)
 
-	newbook := Books{
-		Title: title,
-		Description: description,
-		Author: author,
-		Edition: edition,
-	}
-
-	
-
-	// for parsing the form into json and
-	// storing it into a json file
-	js, err := json.MarshalIndent(newbook, "", " ")
-	if err != nil {
-		log.Printf("problem started right here %+v", err)
-	}
+	// for parsing the form into json
+	//js, err := json.Marshal(newbook)
+	//if err != nil {
+	//	log.Printf("problem started right here %+v", err)
+//	}
+	//fmt.Print(string(js))
 
 	err = ts.Execute(w, newbook)
 	if err != nil {
 		log.Print(err)
 		http.Error(w, "Internal Server Error", 500)
 	}
-
-	fmt.Print(string(js))
 }
 
 func upload(w http.ResponseWriter, r *http.Request) {

@@ -1,7 +1,7 @@
 package main
 
 import (
-	"L0rd5n0w/bookstore/models"
+	"github.com/L0rd5n0w/bookstore/models"
 	"log"
 	"net/http"
 )

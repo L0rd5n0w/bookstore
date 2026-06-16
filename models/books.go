@@ -11,3 +11,8 @@ type Books struct {
 	Edition		string	`json:"edition"`
 }
 
+
+
+func(b *Books) create() {
+	
+}
