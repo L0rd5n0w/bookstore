@@ -6,7 +6,7 @@ import (
 	"html/template"
 	"log"
 	"net/http"
-	"os"
+//	"os"
 )
 
 const dbFile = "db.json"
@@ -18,7 +18,7 @@ type Books struct {
 	Edition		string	`json:"edition"`
 }
 
-func home(w http.ResponseWriter, r *http.Request) {
+func(app *application) home(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/" {
 		http.NotFound(w, r)
 		return
@@ -38,7 +38,7 @@ func home(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func form(w http.ResponseWriter, r *http.Request) {
+func(app *application) form(w http.ResponseWriter, r *http.Request) {
 	ts, err := template.ParseFiles("./ui/templates/html/form.gohtml")
 	if err != nil {
 		log.Print(err)
@@ -66,24 +66,14 @@ func form(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Printf("problem started right here %+v", err)
 	}
-	fmt.Print(string(js))
-
-
-	file, err := os.OpenFile(dbFile, os.O_APPEND|os.O_WRONLY, os.ModeAppend)
-	if err != nil {
-		log.Print(err)
-	}
-	_, err = file.Write(js)
-	if err != nil {
-		log.Print(err)
-	}
-
 
 	err = ts.Execute(w, newbook)
 	if err != nil {
 		log.Print(err)
 		http.Error(w, "Internal Server Error", 500)
 	}
+
+	fmt.Print(string(js))
 }
 
 func upload(w http.ResponseWriter, r *http.Request) {

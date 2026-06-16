@@ -4,11 +4,11 @@ import (
 	"net/http"
 )
 
-func routes() *http.ServeMux {
+func(app *application) routes() *http.ServeMux {
 	mux := http.NewServeMux()
 
-	mux.HandleFunc("/", home)
-	mux.HandleFunc("/form", form)
+	mux.HandleFunc("/", app.home)
+	mux.HandleFunc("/form", app.form)
 	mux.HandleFunc("/upload", upload)
 
 	return mux
