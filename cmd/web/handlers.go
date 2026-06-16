@@ -12,6 +12,9 @@ import (
 )
 
 const dbFile = "db.json"
+var (
+	newbook *models.Books
+)
 
 func NewBooks(title, description, author, edition string) *models.Books {
 	return &models.Books{
@@ -54,7 +57,7 @@ func(app *application) form(w http.ResponseWriter, r *http.Request) {
 	author := r.FormValue("author")
 	edition := r.FormValue("edition")
 
-	newbook := NewBooks(title, description, author, edition)
+	newbook = NewBooks(title, description, author, edition)
 
 	// for parsing the form into json
 	js, err := json.Marshal(newbook)
