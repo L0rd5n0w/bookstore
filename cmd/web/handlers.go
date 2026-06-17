@@ -13,7 +13,7 @@ import (
 
 const dbFile = "db.json"
 var (
-	newbook *models.Books
+	newbook []*models.Books
 )
 
 func NewBooks(title, description, author, edition string) *models.Books {
@@ -51,14 +51,15 @@ func(app *application) formhandler(w http.ResponseWriter, r *http.Request) {
 	author := r.FormValue("author")
 	edition := r.FormValue("edition")
 
-	newbook = NewBooks(title, description, author, edition)
+	//aaa := NewBooks(title, description, author, edition)
+	newbook = append(newbook, NewBooks(title, description, author, edition))
 
-	// for parsing the form into json
-	js, err := json.Marshal(newbook)
+	// Parsing the form into json
+	js, err := json.MarshalIndent(newbook, "", " ")
 	if err != nil {
 		log.Printf("problem started right here %+v", err)
 	}
-	if len(newbook.Title) > 0 {
+	if len(newbook) > 0 {
 		fmt.Print(string(js))
 	}
 
