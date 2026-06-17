@@ -9,7 +9,7 @@ func(app *application) routes() *http.ServeMux {
 
 	mux.HandleFunc("/", app.home)
 	mux.HandleFunc("/form", app.form)
-	mux.HandleFunc("/upload", upload)
+	mux.HandleFunc("/form/handler", app.formhandler)
 
 	return mux
 }

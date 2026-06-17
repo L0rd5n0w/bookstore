@@ -45,13 +45,7 @@ func(app *application) home(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func(app *application) form(w http.ResponseWriter, r *http.Request) {
-	ts, err := template.ParseFiles("./ui/templates/html/form.gohtml")
-	if err != nil {
-		log.Print(err)
-		http.Error(w, "Internal Server Error", 500)
-	}
-
+func(app *application) formhandler(w http.ResponseWriter, r *http.Request) {
 	title := r.FormValue("title")
 	description := r.FormValue("description")
 	author := r.FormValue("author")
@@ -65,16 +59,22 @@ func(app *application) form(w http.ResponseWriter, r *http.Request) {
 		log.Printf("problem started right here %+v", err)
 	}
 	if len(newbook.Title) > 0 {
-		fmt.Print(js)
+		fmt.Print(string(js))
 	}
 
-	err = ts.Execute(w, newbook)
+	w.Write([]byte("Saving to database"))
+}
+
+func(app *application) form(w http.ResponseWriter, r *http.Request) {
+	ts, err := template.ParseFiles("./ui/templates/html/form.gohtml")
 	if err != nil {
 		log.Print(err)
 		http.Error(w, "Internal Server Error", 500)
 	}
-}
 
-func upload(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("Uploading..."))
+	err = ts.Execute(w, nil)
+	if err != nil {
+		log.Print(err)
+		//http.Error(w, "Internal Server Error", 500)
+	}
 }
