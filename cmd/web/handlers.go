@@ -1,3 +1,4 @@
+// Handler file: Holds all the web functions
 package main
 
 import (
@@ -15,6 +16,7 @@ var (
 	newbook []*models.Books
 )
 
+// factory function for models.Book struct
 func NewBooks(title, description, author, edition string) *models.Books {
 	return &models.Books{
 		Title: title,
@@ -24,6 +26,8 @@ func NewBooks(title, description, author, edition string) *models.Books {
 	}
 }
 
+
+// home function for the home page
 func(app *application) home(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/" {
 		http.NotFound(w, r)
@@ -44,6 +48,9 @@ func(app *application) home(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+
+// receives the input of the form and 
+// marshals it into pretty JSON
 func(app *application) formhandler(w http.ResponseWriter, r *http.Request) {
 	title := r.FormValue("title")
 	description := r.FormValue("description")
@@ -66,6 +73,7 @@ func(app *application) formhandler(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("Saving to database"))
 }
 
+// for displaying the form to the web UI
 func(app *application) form(w http.ResponseWriter, r *http.Request) {
 	ts, err := template.ParseFiles("./ui/templates/html/form.gohtml")
 	if err != nil {
