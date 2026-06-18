@@ -2,11 +2,10 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
+	//"fmt"
 	"html/template"
 	"log"
 	"net/http"
-//	"os"
 
 	"github.com/L0rd5n0w/bookstore/models"
 )
@@ -51,7 +50,6 @@ func(app *application) formhandler(w http.ResponseWriter, r *http.Request) {
 	author := r.FormValue("author")
 	edition := r.FormValue("edition")
 
-	//aaa := NewBooks(title, description, author, edition)
 	newbook = append(newbook, NewBooks(title, description, author, edition))
 
 	// Parsing the form into json
@@ -59,8 +57,10 @@ func(app *application) formhandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Printf("problem started right here %+v", err)
 	}
+	
 	if len(newbook) > 0 {
-		fmt.Print(string(js))
+		save(js)
+		//fmt.Print(string(js))
 	}
 
 	w.Write([]byte("Saving to database"))
