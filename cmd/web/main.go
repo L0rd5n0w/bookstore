@@ -19,5 +19,4 @@ func main() {
 	log.Print("Starting Server on :8000")
 	err :=http.ListenAndServe(":8000", app.routes())
 	log.Fatal(err)
-
 }
