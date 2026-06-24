@@ -22,8 +22,8 @@ func save(instantBook []byte) {
 		log.Print(err)
 	}
 	if len(rFile) > 0 {
-		newbook = append(newbook, )
-	}
-
+		
+	} 
+	
 	file.Write(instantBook)
 }
