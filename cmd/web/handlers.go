@@ -58,7 +58,6 @@ func(app *application) formhandler(w http.ResponseWriter, r *http.Request) {
 	edition := r.FormValue("edition")
 
 	newbook = append(newbook, NewBooks(title, description, author, edition))
-
 	// Parsing the form into json
 	js, err := json.MarshalIndent(newbook, "", " ")
 	if err != nil {
